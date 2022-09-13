@@ -22,7 +22,6 @@ const Registrations = (props) => {
     const interval = setInterval(() => {
       let index = count % images.length;
       setImage(images[index]);
-      console.log(count);
       count++;
     }, 4000);
     return () => clearInterval(interval);
