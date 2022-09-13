@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PhotoGrid from "./PhotoGrid";
 
 export const EditProfile = (props) => {
   return (
@@ -16,23 +17,25 @@ export const EditProfile = (props) => {
           Done
         </button>
       </div>
-      {/* <> Drag and Drop</> */}
-      <div className="flex flex-col border-b">
-        <div className="font-semibold">My Birthday</div>
+      <PhotoGrid />
+      <div className="flex flex-col border-b py-4">
+        <div className="font-semibold ">My Birthday</div>
         <p className="text-sm pl-10">Jan 29, 1994</p>
       </div>
-      <div className="flex flex-col border-b">
-        <div className="font-semibold">My Gender</div>
-        <input
-          style={{ accentColor: "#ff64c4" }}
-          className="outline-none shadow-amber"
-          checked
-          type="radio"
-        />
-        <input className="" type="radio" />
-        <input className="" type="radio" />
+      <div className="flex flex-col border-b py-4">
+        <h1 className="font-semibold">My Gender</h1>
+        <div className="flex flex-col">
+          <input
+            style={{ accentColor: "#ff64c4" }}
+            className="outline-none shadow-amber"
+            checked
+            type="radio"
+          />
+          <input className="" type="radio" />
+          <input className="" type="radio" />
+        </div>
       </div>
-      <div className="flex flex-col border-b">
+      <div className="flex flex-col border-b py-4">
         <div className="font-semibold">About Me</div>
         <p className="text-sm pl-10 break-all">
           {" "}

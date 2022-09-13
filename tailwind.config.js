@@ -17,6 +17,9 @@ module.exports = {
         "slide-up": "slide-up 0.14s forwards",
         "slide-down": "slide-down 0.14s forwards",
       },
+      scale: {
+        ["90"]: ".9",
+      },
     },
   },
   plugins: [],
