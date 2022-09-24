@@ -45,7 +45,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.authUser);
     return (
       <Routes>
         <Route

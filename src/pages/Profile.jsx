@@ -1,12 +1,22 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
+import { fetchUser } from "../network/User";
 
 import EditProfile from "../components/EditProfile";
 
 export const Profile = (props) => {
   const [active, setActive] = useState(false);
   const [initial, setInitial] = useState("top-[100%]");
+  const [mounted, setMounted] = useState(false);
+
+  const unMount = () => {
+    setActive(false);
+    setTimeout(() => {
+      setMounted(false);
+    }, 500);
+  };
+
   return (
     <div className="flex flex-col flex-1 py-4 overflow-hidden">
       <div className="flex justify-center">
@@ -25,6 +35,7 @@ export const Profile = (props) => {
         </p>
         <button
           onClick={() => {
+            setMounted(true);
             setActive(true);
             setInitial("animate-slide-down");
           }}
@@ -35,12 +46,16 @@ export const Profile = (props) => {
           />
         </button>
       </div>
-      <EditProfile
-        active={active}
-        initial={initial}
-        setActive={setActive}
-        setIntial={setInitial}
-      />
+      {mounted && (
+        <EditProfile
+          active={active}
+          initial={initial}
+          setActive={setActive}
+          setIntial={setInitial}
+          authUser={props.authUser}
+          unMount={unMount}
+        />
+      )}
     </div>
   );
 };

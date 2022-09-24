@@ -3,6 +3,8 @@ const backend = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 export const request = (
   route,
   method,
+  omitContentType = false,
+  userId = null,
   data = null,
   headers = {},
   queryParams = null
@@ -23,11 +25,11 @@ export const request = (
 
   options.method = method;
   options.headers = headers;
-  options.headers["Content-Type"] = "application/json";
+  if (!omitContentType) options.headers["Content-Type"] = "application/json";
+  options.headers["Accept"] = "application/json";
   options.headers["Access-Control-Allow-Origin"] = "*";
-  if (method !== "GET") {
-    options.body = JSON.stringify(data) || {};
-  }
+  if (method !== "GET") options.body = JSON.stringify(data);
+  if (method === "PATCH" && route === `/users/${userId}`) options.body = data;
   options.credentials = "include";
 
   return fetch(queryUrl, options)
