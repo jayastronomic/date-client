@@ -51,7 +51,7 @@ export const AddPhotoCard = (props) => {
           <img
             //
             onDragStart={props.onDragStart}
-            className={`h-24 w-24 object-cover rounded cursor-pointer transitin ${holdPhoto}`}
+            className={`h-24 w-24 object-cover rounded cursor-pointer transition ${holdPhoto}`}
             src={props.url}
           />
         </div>

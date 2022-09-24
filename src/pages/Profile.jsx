@@ -1,14 +1,19 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useTransition, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchUser } from "../network/User";
 
 import EditProfile from "../components/EditProfile";
 
 export const Profile = (props) => {
+  const [authUser, setAuthUser] = useState({});
   const [active, setActive] = useState(false);
   const [initial, setInitial] = useState("top-[100%]");
   const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    fetchUser(props.authUser.id).then((authUser) => setAuthUser(authUser));
+  }, []);
 
   const unMount = () => {
     setActive(false);
@@ -19,20 +24,25 @@ export const Profile = (props) => {
 
   return (
     <div className="flex flex-col flex-1 py-4 overflow-hidden">
-      <div className="flex justify-center">
-        <FontAwesomeIcon
-          className="text-gray-500 text-[10rem]"
-          icon={solid("user-circle")}
-        />
-      </div>
+      {authUser.avatar_exist ? (
+        <div className="flex justify-center">
+          <div className="flex justify-center items-center overflow-hidden rounded-full w-40 h-40">
+            <img
+              className="object-cover"
+              src={authUser.avatar_url}
+              alt="avatar"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <FontAwesomeIcon
+            className="text-gray-500 text-[10rem]"
+            icon={solid("user-circle")}
+          />
+        </div>
+      )}
       <div className="flex text-3xl justify-around pt-4">
-        <FontAwesomeIcon
-          className="text-gray-500 hover:text-[#ff64c4] transition"
-          icon={solid("pen")}
-        />
-        <p className="text-xl text-gray-500 capitalize">
-          {props.authUser.name}, {props.authUser.age}
-        </p>
         <button
           onClick={() => {
             setMounted(true);
@@ -42,9 +52,17 @@ export const Profile = (props) => {
         >
           <FontAwesomeIcon
             className="text-gray-500 hover:text-[#ff64c4] transition"
-            icon={solid("cog")}
+            icon={solid("pen")}
           />
         </button>
+        <p className="text-xl text-gray-500 capitalize">
+          {props.authUser.name}, {props.authUser.age}
+        </p>
+
+        <FontAwesomeIcon
+          className="text-gray-500 hover:text-[#ff64c4] transition"
+          icon={solid("cog")}
+        />
       </div>
       {mounted && (
         <EditProfile
@@ -52,7 +70,8 @@ export const Profile = (props) => {
           initial={initial}
           setActive={setActive}
           setIntial={setInitial}
-          authUser={props.authUser}
+          authUser={authUser}
+          setAuthUser={setAuthUser}
           unMount={unMount}
         />
       )}
