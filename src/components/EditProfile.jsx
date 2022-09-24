@@ -1,26 +1,23 @@
 import React, { Component } from "react";
-import PhotoGrid from "./PhotoGrid";
-import { updateUser, fetchUser } from "../network/User";
+import Avatar from "./Avatar";
+import { updateUser } from "../network/User";
 
 class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gender: "",
-      bio: "",
-      images: [],
+      gender: this.props.authUser.gender,
+      bio: this.props.authUser.bio,
+      avatar_url: this.props.authUser.avatar_url,
+      avatar_exist: this.props.authUser.avatar_exist,
+      avatar: "",
     };
-  }
-
-  componentDidMount() {
-    fetchUser(this.props.authUser.id).then((user) => console.log(user));
   }
 
   handleAddPhoto = (photo) => {
     this.setState({
-      images: photo,
+      avatar: photo,
     });
-    console.log(photo);
   };
 
   handleChange = (e) => {
@@ -32,10 +29,13 @@ class EditProfile extends Component {
   handSubmit = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("user[images]", this.state.images);
+    if (this.state.avatar) {
+      formData.append("user[avatar]", this.state.avatar);
+    }
     formData.append("user[bio]", this.state.bio);
+    formData.append("user[gender]", this.state.gender);
     updateUser(this.props.authUser.id, formData).then((user) => {
-      console.log(user);
+      this.props.setAuthUser(user);
     });
   };
 
@@ -56,7 +56,11 @@ class EditProfile extends Component {
             Done
           </button>
         </div>
-        <PhotoGrid handleAddPhoto={this.handleAddPhoto} />
+        <Avatar
+          handleAddPhoto={this.handleAddPhoto}
+          avatarExist={this.state.avatar_exist}
+          avatarUrl={this.state.avatar_url}
+        />
         <div className="flex flex-col border-b py-4">
           <div className="font-semibold ">My Birthday</div>
           <p className="text-sm pl-10">Jan 29, 1994</p>
