@@ -5,15 +5,16 @@ const addPhotoButtonClass =
 export const AddPhotoCard = (props) => {
   const [holdPhoto, setHoldPhoto] = useState("");
   const hiddenFileInput = useRef();
-  console.log(hiddenFileInput.current);
 
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
   const handleChange = (e) => {
-    console.log(e.target.files);
+    const uploadedPhoto = e.target.files[0];
+    props.handleAddPhoto(uploadedPhoto);
   };
+
   return (
     <div
       onDragOver={props.onDragOver}
@@ -30,6 +31,7 @@ export const AddPhotoCard = (props) => {
             +
           </button>
           <input
+            name="images"
             ref={hiddenFileInput}
             onChange={handleChange}
             type="file"

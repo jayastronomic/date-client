@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AddPhotoCard } from "./AddPhotoCard";
 import fetchedPhotos from "../data";
 
-const PhotoGrid = () => {
+const PhotoGrid = (props) => {
   const [draggable, setDraggable] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [originalSrc, setOriginalSrc] = useState("");
@@ -16,6 +16,8 @@ const PhotoGrid = () => {
           onDragOver={allowDrop}
           onDrop={drop}
           onDragStart={drag}
+          handleChange={props.handleChange}
+          handleAddPhoto={props.handleAddPhoto}
         />
       );
     });
@@ -34,7 +36,7 @@ const PhotoGrid = () => {
   };
 
   return (
-    <div onCL className="flex flex-col justify-center items-center pt-4">
+    <div className="flex flex-col justify-center items-center pt-4">
       <div className="grid grid-cols-3 grid-rows-3">{photos}</div>
       <p className="text-sm text-gray-400 font-semibold">
         Drag and drop to reorder photos
