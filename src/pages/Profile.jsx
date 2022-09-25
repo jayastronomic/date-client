@@ -1,4 +1,4 @@
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import { fetchUser } from "../network/User";
@@ -42,8 +42,9 @@ export const Profile = (props) => {
           />
         </div>
       )}
-      <div className="flex text-3xl justify-around pt-4">
+      <div className="flex text-2xl justify-around pt-4">
         <button
+          className=""
           onClick={() => {
             setMounted(true);
             setActive(true);
@@ -51,7 +52,7 @@ export const Profile = (props) => {
           }}
         >
           <FontAwesomeIcon
-            className="text-gray-500 hover:text-[#ff64c4] transition"
+            className="bg-[#ff64c4] p-4 rounded-full  text-white hover:text-gray-300 transition"
             icon={solid("pen")}
           />
         </button>
@@ -59,10 +60,12 @@ export const Profile = (props) => {
           {props.authUser.name}, {props.authUser.age}
         </p>
 
-        <FontAwesomeIcon
-          className="text-gray-500 hover:text-[#ff64c4] transition"
-          icon={solid("cog")}
-        />
+        <button className="">
+          <FontAwesomeIcon
+            className="bg-[#ff64c4] p-4 rounded-full  text-white hover:text-gray-300 transition"
+            icon={solid("cog")}
+          />
+        </button>
       </div>
       {mounted && (
         <EditProfile
